@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductoService {
@@ -16,14 +17,14 @@ public class ProductoService {
     }
 
     public List<Producto> getProductos() {
-        return productoRepository.findAll();
+            return productoRepository.findAll();
     }
 
     public List<String> getNombreProductos() {
         List<Producto> productos = productoRepository.findAll();
         return productos.stream()
                 .map(producto -> producto.getNombre())
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public Producto getProductoPorId(Integer productoId) {
@@ -46,6 +47,7 @@ public class ProductoService {
                 if (producto.getPrecio() != null) productoExistente.setPrecio(producto.getPrecio());
                 if (producto.getStock() != null) productoExistente.setStock(producto.getStock());
                 productoRepository.save(productoExistente);
+                return;
             } else producto.setProducto_id(null);
         }
         productoRepository.save(producto);

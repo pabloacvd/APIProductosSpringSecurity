@@ -1,6 +1,7 @@
 package ar.com.xeven.apiproductosspringsecurity.producto;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name="productos")
@@ -51,6 +52,19 @@ public class Producto {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Producto)) return false;
+        Producto producto = (Producto) o;
+        return Objects.equals(producto_id, producto.producto_id) && Objects.equals(nombre, producto.nombre) && Objects.equals(precio, producto.precio) && Objects.equals(stock, producto.stock);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(producto_id, nombre, precio, stock);
     }
 
     @Override
